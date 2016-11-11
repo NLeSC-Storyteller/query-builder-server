@@ -105,13 +105,77 @@ URL | Method | URL_params | Data_params
 * **Error Response:**
 
   * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "User doesn't exist" }`
+    **Content:** `{ error : "ID doesn't exist" }`
 
 * **Sample Call:**
 
   ```javascript
     $.ajax({
       url: "/node/12",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+**Get All descendants of node By ID**
+----
+  Returns json data corresponding with the All of the descendants of the node corresponding to ID in the database.
+
+URL | Method | URL_params | Data_params 
+--- | -------| ---------- | -----------
+/node/:id/descendants | 'GET' | Required | None
+                      |       | `id=[integer]` | 
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `[{"id":3,"url":"http://dbpedia.org/resource/Talisman_(board_game)","name":"Talisman_(board_game)","mention_count":1,"entity_id":3}]`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "ID doesn't exist" }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/node/2/descendants",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+**Get children of node By ID**
+----
+  Returns json data corresponding with the descendants of the node corresponding to ID in the database.
+
+URL | Method | URL_params | Data_params 
+--- | -------| ---------- | -----------
+/node/children/:id | 'GET' | Required | None
+                   |       | `parent_id=[integer]` | 
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `[{"id":3,"url":"http://dbpedia.org/ontology/Game","name":"Game","mention_count":1,"instance_count":1,"parent_id":2}]`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "No children found" }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/node/children/2/",
       dataType: "json",
       type : "GET",
       success : function(r) {
