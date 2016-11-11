@@ -1,0 +1,24 @@
+/* ignore editor specific stuff */
+.vs
+.vscode
+
+/* the packages */
+node_modules
+
+/* all the Typescript generated stufff */
+app/*.js.map
+app/*.js
+
+/* test reports */
+test/reports
+e2e/reports
+
+/* build files */
+build/
+
+/* distributable files */
+dist/
+
+/* logs */
+npm-debug.log
+
