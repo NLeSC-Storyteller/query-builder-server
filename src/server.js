@@ -6,26 +6,17 @@ var app = express();
 
 app.use(cors());
 
-app.get('/list', function (req, res, next) {
-        db.all("SELECT name FROM sqlite_master WHERE type = 'table';", function (err, rows) {
-            if(err !== null) {
-                return next(err);
-            }
-            res.status(200).send(rows);
-        });
-});
-
-app.get('/root', function (req, res, next) {
-        db.all("SELECT * FROM nodes WHERE id=1", function (err, rows) {
-            if(err !== null) {
-                return next(err);
-            }
-            res.status(200).send(rows);
-        });
-});
-
 app.get('/', function (req, res, next) {
         db.all("SELECT * FROM nodes", function (err, rows) {
+            if(err !== null) {
+                return next(err);
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/list', function (req, res, next) {
+        db.all("SELECT name FROM sqlite_master WHERE type = 'table';", function (err, rows) {
             if(err !== null) {
                 return next(err);
             }
@@ -56,6 +47,16 @@ app.get('/node/:id/children', function (req, res, next) {
             res.status(200).send(rows);
         });
 });
+
+app.get('/root', function (req, res, next) {
+        db.all("SELECT * FROM nodes WHERE id=1", function (err, rows) {
+            if(err !== null) {
+                return next(err);
+            }
+            res.status(200).send(rows);
+        });
+});
+
 
 app.listen(5000, function(){
     console.log('Example app listening on port 5000!');
