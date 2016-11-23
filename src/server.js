@@ -37,7 +37,7 @@ app.get('/node/:id', function (req, res, next) {
 });
 
 app.get('/node/:id/children', function (req, res, next) {
-        db.all("SELECT * FROM nodes WHERE child_of = ?", req.params.id, function (err, rows) {
+        db.all("SELECT * FROM nodes WHERE child_of = ? ORDER BY is_entity DESC, name ASC", req.params.id, function (err, rows) {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
