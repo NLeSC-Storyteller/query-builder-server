@@ -13,7 +13,7 @@ Please find the API here: https://github.com/NLeSC-Storyteller/query-builder-ser
 | entity | [entityType](#entityType) | entityPhrase | entityInstance |
 | event | eventType | eventPhrase | eventInstance |
 | source | sourceType | sourcePhrase | sourceInstance |
-| topic | topicType | topicPhrase | [topicInstance](#topicInstance) |
+| topic | topicType | topicPhrase | [topicInstance](#topicinstance) |
 
 
 
