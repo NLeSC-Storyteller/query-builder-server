@@ -41,4 +41,3 @@ Please find the API here: https://github.com/NLeSC-Storyteller/query-builder-ser
 
 ## topicInstance
 
-https://github.com/NLeSC-Storyteller/query-builder-server/tree/data-model-update-20161208#topicinstance
