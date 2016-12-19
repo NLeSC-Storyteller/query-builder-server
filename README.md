@@ -10,10 +10,10 @@ Please find the API here: https://github.com/NLeSC-Storyteller/query-builder-ser
 
 |   | Type | Phrase  | Instance  |
 |---|---|---|---|
-| entity | [entityType](#entityType) | entityPhrase | entityInstance |
-| event | eventType | eventPhrase | eventInstance |
-| source | sourceType | sourcePhrase | sourceInstance |
-| topic | topicType | topicPhrase | [topicInstance](#topicInstance) |
+| entity | [entityType](#entitytype) | [entityPhrase](#entityphrase) | [entityInstance](#entityinstance) |
+| event | [eventType](#eventtype) | [eventPhrase](#eventphrase) | [eventInstance](#eventinstance) |
+| source | [sourceType](#sourcetype) | [sourcePhrase](#sourcephrase) | [sourceInstance](#sourceinstance) |
+| topic | [topicType](#topictype) | [topicPhrase](#topicphrase) | [topicInstance](#topicInstance) |
 
 
 
@@ -41,4 +41,4 @@ Please find the API here: https://github.com/NLeSC-Storyteller/query-builder-ser
 
 ## topicInstance
 
-
+https://github.com/NLeSC-Storyteller/query-builder-server/tree/data-model-update-20161208#topicinstance
