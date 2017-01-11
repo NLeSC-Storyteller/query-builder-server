@@ -111,6 +111,66 @@ app.get('/topics/:id/children', function (req, res, next) {
         });
 });
 
+app.get('/search/entities/:text', function (req, res, next) {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
+            "SELECT childof FROM entities WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT childof FROM entities e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/search/events/:text', function (req, res, next) {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
+            "SELECT childof FROM events WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT childof FROM events e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/search/sources/:text', function (req, res, next) {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
+            "SELECT childof FROM sources WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT childof FROM sources e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/search/topics/:text', function (req, res, next) {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
+            "SELECT childof FROM topics WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT childof FROM topics e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
 app.listen(5000, function(){
     console.log('Example app listening on port 5000!');
 });
