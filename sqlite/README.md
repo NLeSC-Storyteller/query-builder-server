@@ -1,5 +1,5 @@
 #SQLite extended functionality
-SQLite allows new functionality to be added using the C/C++ interface, more information can be found at (SQLite Run-time Loadable Extensions)[http://sqlite.org/loadext.html].
+SQLite allows new functionality to be added using the C/C++ interface, more information can be found at [SQLite Run-time Loadable Extensions](http://sqlite.org/loadext.html).
 
 ##Xenon functions
 For Xenon there is the file xenon_functions.c to which an user can add more functions to interact with Xenon from SQLite.
