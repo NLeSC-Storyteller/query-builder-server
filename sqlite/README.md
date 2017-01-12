@@ -22,11 +22,13 @@ select xenon_query(<query_id>, <query>);
 ```
 
 ##Create a trigger using an extension function
-First a table should be created.
+To create a trigger over a table you need first to create a table.
+In case there is already a table with the same schema as the one defined in the example jump to the next step, otherwise, do the following step.
 ```
 sqlite3 <path_to_database>/<database>.db < ./sqlite/sql/tables.sql
 ```
-Then the trigger can be created.
+
+With the table queries created the trigger can now be defined. If you want to define the trigger over another table, make sure it contains an integer column named id and a string column named query. It is also possible to have different column names, if that is the case please update the trigger definition, i.e., change the column's name in xenon_query call.
 ```
 #Create a trigger which for each added row calls xenon_query using row's query_id and row's query as parameters.
 sqlite3 <path_to_database>/<database>.db < ./sqlite/sql/trigger.sql
@@ -35,4 +37,3 @@ Any insertion on the table will trigger the run of xenon_query.
 ```
 sqlite3 <path_to_database>/<database>.db < ./sqlite/sql/insert.sql
 ```
-
