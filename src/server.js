@@ -4,6 +4,8 @@ var cors = require('cors');
 var db = new sqlite3.Database('./data/storyteller.db');
 var app = express();
 
+db.run('.load ../sqlite/funcs/libxenonfunctions');
+
 app.use(cors());
 
 app.get('/list', function (req, res, next) {
