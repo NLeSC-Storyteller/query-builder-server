@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
-
 #include "sqlite3ext.h"
+
 SQLITE_EXTENSION_INIT1
 
 /*Xenon function to run queries*/
@@ -25,6 +25,10 @@ void xenon_query(sqlite3_context *context, int argc, sqlite3_value **argv)
 }
 
 /*Add functions as extensions to SQLite*/
+#ifdef _WIN32
+__declspec(dllexport)
+#endif
+
 int sqlite3_xenonfunctions_init(
     sqlite3 *db, 
     char **pzErrMsg,
