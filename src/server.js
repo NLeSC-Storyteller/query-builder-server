@@ -1,10 +1,10 @@
 var sqlite3 = require('sqlite3').verbose();
 var express = require('express');
 var cors = require('cors');
-var db = new sqlite3.Database('./data/storyteller.db');
+var db = new sqlite3.Database('./data/storyteller2.db');
 var app = express();
 
-db.run('.load ../sqlite/funcs/libxenonfunctions');
+// db.loadExtension('./sqlite/funcs/libxenonfunctions');
 
 app.use(cors());
 
@@ -115,12 +115,12 @@ app.get('/topics/:id/children', function (req, res, next) {
 
 app.get('/search/entities/:text', function (req, res, next) {
     db.all(""+
-        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
-            "SELECT childof FROM entities WHERE name LIKE ? \n" +
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM entities WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT childof FROM entities e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM entities e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
-        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
         if(err !== null) {
             return next(err);
         } 
@@ -130,12 +130,12 @@ app.get('/search/entities/:text', function (req, res, next) {
 
 app.get('/search/events/:text', function (req, res, next) {
     db.all(""+
-        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
-            "SELECT childof FROM events WHERE name LIKE ? \n" +
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM events WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT childof FROM events e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM events e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
-        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
         if(err !== null) {
             return next(err);
         } 
@@ -145,12 +145,12 @@ app.get('/search/events/:text', function (req, res, next) {
 
 app.get('/search/sources/:text', function (req, res, next) {
     db.all(""+
-        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
-            "SELECT childof FROM sources WHERE name LIKE ? \n" +
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM sources WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT childof FROM sources e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM sources e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
-        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
         if(err !== null) {
             return next(err);
         } 
@@ -160,12 +160,12 @@ app.get('/search/sources/:text', function (req, res, next) {
 
 app.get('/search/topics/:text', function (req, res, next) {
     db.all(""+
-        "WITH RECURSIVE parent_ids(parentID) AS ( \n" +
-            "SELECT childof FROM topics WHERE name LIKE ? \n" +
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM topics WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT childof FROM topics e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM topics e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
-        "SELECT parentID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', function (err, rows) {
         if(err !== null) {
             return next(err);
         } 
