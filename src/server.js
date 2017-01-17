@@ -1,4 +1,4 @@
-var sqlite3 = require('sqlite3').verbose();
+var sqlite3 = require('../built_node_modules/sqlite3').verbose();
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
