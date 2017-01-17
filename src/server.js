@@ -1,12 +1,16 @@
 var sqlite3 = require('sqlite3').verbose();
 var express = require('express');
+var bodyParser = require('body-parser');
 var cors = require('cors');
+
 var db = new sqlite3.Database('./data/storyteller2.db');
 var app = express();
 
-// db.loadExtension('./sqlite/funcs/libxenonfunctions');
-
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors());
+
+db.loadExtension('sqlite/funcs/libxenonfunctions');
 
 app.get('/list', function (req, res, next) {
         db.all("SELECT name FROM sqlite_master WHERE type = 'table';", function (err, rows) {
@@ -170,6 +174,22 @@ app.get('/search/topics/:text', function (req, res, next) {
             return next(err);
         } 
         res.status(200).send(rows);
+    });
+});
+
+app.post('/addquery', function(req, res, next) {
+    var username = req.body.username;
+    var query = req.body.query;
+
+    sqlRequest = "INSERT INTO 'queries' (query) " +
+                 "VALUES('" + query + "')"
+    db.run(sqlRequest, function(err) {
+        if(err !== null) {
+            next(err);
+        }
+        else {
+            res.redirect('back');
+        }
     });
 });
 
