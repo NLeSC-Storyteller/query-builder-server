@@ -1,2 +1,2 @@
 .load ./sqlite/funcs/libxenonfunctions
-insert into queries (query, finished) values ('--word virus;disease;', 1);
+insert into queries (query, status) values ('--word virus;disease;', 1);

@@ -27,5 +27,5 @@ sudo make install
 
 Once you have compiled and installed sqlite3 using mingw the next step is to create the .dll file.
 ```
-i586-mingw32msvc-gcc -lm -DSQLITE_CORE -g -shared xenon_functions.c -o libxenonfunctions.dll -lsqlite3
+i586-mingw32msvc-gcc -g -shared xenon_functions.c -o libxenonfunctions.dll
 ```

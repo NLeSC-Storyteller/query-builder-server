@@ -5,6 +5,7 @@
 #include "sqlite3ext.h"
 
 SQLITE_EXTENSION_INIT1
+#define BUILDING_DLL
 
 /*Xenon function to run queries*/
 void xenon_run_query( const unsigned int query_id, const unsigned char* query)
