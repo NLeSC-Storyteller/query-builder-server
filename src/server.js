@@ -3,7 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var db = new sqlite3.Database('./data/storyteller4.db');
+var db = new sqlite3.Database('./data/storyteller5.db');
 var app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -222,7 +222,7 @@ app.post('/addquery', (req, res, next) => {
 });
 
 app.get('/queries', (req, res, next) => {
-    db.all("SELECT * FROM queries;", (err, rows) => {
+    db.all("SELECT username, query, status FROM queries;", (err, rows) => {
         if(err !== null) {
             return next(err);
         } 
