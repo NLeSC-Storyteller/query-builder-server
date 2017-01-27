@@ -2,6 +2,7 @@ var sqlite3 = require('sqlite3').verbose();
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var btoa = require('btoa');
 
 var db = new sqlite3.Database('./data/storyteller5.db');
 var app = express();
@@ -222,11 +223,25 @@ app.post('/addquery', (req, res, next) => {
 });
 
 app.get('/queries', (req, res, next) => {
-    db.all("SELECT username, query, status FROM queries;", (err, rows) => {
+    db.all("SELECT id, username, query, status FROM queries;", (err, rows) => {
         if(err !== null) {
             return next(err);
         } 
         res.status(200).send(rows);
+    });
+});
+
+app.get('/query/:id', (req, res, next) => {
+    db.all("SELECT result FROM queries WHERE id = ?;", mysql_real_escape_string(req.params.id), (err, rows) => {
+        if(err !== null) {
+            return next(err);
+        } else if (rows.length === 0) {
+            console.log(err);
+            return res.status(404).send({ error : "ID doesn't exist" });
+        }
+        var json = btoa(rows);
+        console.log(json);
+        res.status(200).send(json);
     });
 });
 
