@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var btoa = require('btoa');
 
-var db = new sqlite3.Database('./data/storyteller5.db');
+var db = new sqlite3.Database('./data/storyteller6.db');
 var app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -239,9 +239,7 @@ app.get('/query/:id', (req, res, next) => {
             console.log(err);
             return res.status(404).send({ error : "ID doesn't exist" });
         }
-        var json = btoa(rows);
-        console.log(json);
-        res.status(200).send(json);
+        res.status(200).send(rows);
     });
 });
 
