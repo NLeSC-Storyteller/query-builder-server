@@ -239,7 +239,23 @@ app.get('/query/:id', (req, res, next) => {
             console.log(err);
             return res.status(404).send({ error : "ID doesn't exist" });
         }
-        res.status(200).send(rows);
+
+        var options = {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-timestamp': Date.now(),
+                'x-sent': true
+            }
+        };
+
+        var fileName = req.params.name;
+        res.status(200).sendFile(rows[0].result, options, function (err) {
+            if (err) {
+            next(err);
+            } else {
+            console.log('Sent:', fileName);
+            }
+        });
     });
 });
 
