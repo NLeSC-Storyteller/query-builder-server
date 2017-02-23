@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var btoa = require('btoa');
 
-var db = new sqlite3.Database('./data/storyteller6.db');
+var db = new sqlite3.Database('./data/new-storyteller.db');
 var app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -47,8 +47,8 @@ app.get('/list', (req, res, next) => {
         });
 });
 
-app.get('/entities/:id', (req, res, next) => {
-        db.all("SELECT * FROM entities WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/lightentities/:id', (req, res, next) => {
+        db.all("SELECT * FROM lightentities WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -59,8 +59,56 @@ app.get('/entities/:id', (req, res, next) => {
         });
 });
 
-app.get('/entities/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM entities WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/lightentities/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM lightentities WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/darkentities/:id', (req, res, next) => {
+        db.all("SELECT * FROM darkentities WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/darkentities/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM darkentities WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/concepts/:id', (req, res, next) => {
+        db.all("SELECT * FROM concepts WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/concepts/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM concepts WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -95,8 +143,8 @@ app.get('/events/:id/children', (req, res, next) => {
         });
 });
 
-app.get('/sources/:id', (req, res, next) => {
-        db.all("SELECT * FROM sources WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/authors/:id', (req, res, next) => {
+        db.all("SELECT * FROM authors WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -107,8 +155,32 @@ app.get('/sources/:id', (req, res, next) => {
         });
 });
 
-app.get('/sources/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM sources WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/authors/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM authors WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/cited/:id', (req, res, next) => {
+        db.all("SELECT * FROM cited WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/cited/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM cited WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -143,12 +215,66 @@ app.get('/topics/:id/children', (req, res, next) => {
         });
 });
 
-app.get('/search/entities/:text', (req, res, next) => {
+app.get('/perspectives/:id', (req, res, next) => {
+        db.all("SELECT * FROM perspectives WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/perspectives/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM perspectives WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+            if(err !== null) {
+                return next(err);
+            } else if (rows.length === 0) {
+                console.log(err);
+                return res.status(404).send({ error : "ID doesn't exist" });
+            }
+            res.status(200).send(rows);
+        });
+});
+
+app.get('/search/lightentities/:text', (req, res, next) => {
     db.all(""+
         "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
-            "SELECT id, childof FROM entities WHERE name LIKE ? \n" +
+            "SELECT id, childof FROM lightentities WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT id, childof FROM entities e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM lightentities e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/search/darkentities/:text', (req, res, next) => {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM darkentities WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT id, childof FROM darkentities e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/search/concepts/:text', (req, res, next) => {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM concepts WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT id, childof FROM concepts e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
         "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
         if(err !== null) {
@@ -173,12 +299,27 @@ app.get('/search/events/:text', (req, res, next) => {
     });
 });
 
-app.get('/search/sources/:text', (req, res, next) => {
+app.get('/search/authors/:text', (req, res, next) => {
     db.all(""+
         "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
-            "SELECT id, childof FROM sources WHERE name LIKE ? \n" +
+            "SELECT id, childof FROM authors WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT id, childof FROM sources e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM authors e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/search/cited/:text', (req, res, next) => {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM cited WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT id, childof FROM cited e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
         "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
         if(err !== null) {
@@ -194,6 +335,21 @@ app.get('/search/topics/:text', (req, res, next) => {
             "SELECT id, childof FROM topics WHERE name LIKE ? \n" +
             "UNION \n" +
             "SELECT id, childof FROM topics e, parent_ids p WHERE e.id=p.parentID \n" +
+        ") \n" +
+        "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/search/perspectives/:text', (req, res, next) => {
+    db.all(""+
+        "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
+            "SELECT id, childof FROM perspectives WHERE name LIKE ? \n" +
+            "UNION \n" +
+            "SELECT id, childof FROM perspectives e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
         "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
         if(err !== null) {
@@ -248,12 +404,13 @@ app.get('/query/:id', (req, res, next) => {
             }
         };
 
-        var fileName = req.params.name;
-        res.status(200).sendFile(rows[0].result, options, function (err) {
+        var fileName = rows[0].result;
+        console.log(fileName);
+        res.status(200).sendFile(fileName, options, function (err) {
             if (err) {
-            next(err);
+                next(err);
             } else {
-            console.log('Sent:', fileName);
+                console.log('Sent:', fileName);
             }
         });
     });
