@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var btoa = require('btoa');
 
-var db = new sqlite3.Database('./data/new-storyteller.db');
+var db = new sqlite3.Database('./data/storyteller.db');
 var app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
