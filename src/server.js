@@ -47,8 +47,8 @@ app.get('/list', (req, res, next) => {
         });
 });
 
-app.get('/lightentities/:id', (req, res, next) => {
-        db.all("SELECT * FROM lightentities WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/light/:id', (req, res, next) => {
+        db.all("SELECT * FROM light WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -59,8 +59,8 @@ app.get('/lightentities/:id', (req, res, next) => {
         });
 });
 
-app.get('/lightentities/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM lightentities WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/light/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM light WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -71,8 +71,8 @@ app.get('/lightentities/:id/children', (req, res, next) => {
         });
 });
 
-app.get('/darkentities/:id', (req, res, next) => {
-        db.all("SELECT * FROM darkentities WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/dark/:id', (req, res, next) => {
+        db.all("SELECT * FROM dark WHERE id = ?", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -83,8 +83,8 @@ app.get('/darkentities/:id', (req, res, next) => {
         });
 });
 
-app.get('/darkentities/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM darkentities WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+app.get('/dark/:id/children', (req, res, next) => {
+        db.all("SELECT * FROM dark WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -239,12 +239,12 @@ app.get('/perspectives/:id/children', (req, res, next) => {
         });
 });
 
-app.get('/search/lightentities/:text', (req, res, next) => {
+app.get('/search/light/:text', (req, res, next) => {
     db.all(""+
         "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
-            "SELECT id, childof FROM lightentities WHERE name LIKE ? \n" +
+            "SELECT id, childof FROM light WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT id, childof FROM lightentities e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM light e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
         "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
         if(err !== null) {
@@ -254,12 +254,12 @@ app.get('/search/lightentities/:text', (req, res, next) => {
     });
 });
 
-app.get('/search/darkentities/:text', (req, res, next) => {
+app.get('/search/dark/:text', (req, res, next) => {
     db.all(""+
         "WITH RECURSIVE parent_ids(myID, parentID) AS ( \n" +
-            "SELECT id, childof FROM darkentities WHERE name LIKE ? \n" +
+            "SELECT id, childof FROM dark WHERE name LIKE ? \n" +
             "UNION \n" +
-            "SELECT id, childof FROM darkentities e, parent_ids p WHERE e.id=p.parentID \n" +
+            "SELECT id, childof FROM dark e, parent_ids p WHERE e.id=p.parentID \n" +
         ") \n" +
         "SELECT myID FROM parent_ids \n" , '%'+req.params.text+'%', (err, rows) => {
         if(err !== null) {
