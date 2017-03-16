@@ -11,7 +11,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors());
 
-db.loadExtension('sqlite/funcs/libxenonfunctions');
+db.loadExtension('/src/query-builder-server/sqlite/funcs/libxenonfunctions');
 
 function mysql_real_escape_string (str) {
     return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
