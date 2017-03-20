@@ -13,6 +13,8 @@ app.use(cors());
 
 db.loadExtension('/src/query-builder-server/sqlite/funcs/libxenonfunctions');
 
+console.log('Query-Builder-Server started. logging enabled.');
+
 function mysql_real_escape_string (str) {
     return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
         switch (char) {
@@ -370,6 +372,7 @@ app.post('/addquery', (req, res, next) => {
 
     db.run(sqlRequest, (err) => {
         if(err !== null) {
+            console.log(err.message);
             next(err);
         }
         else {
