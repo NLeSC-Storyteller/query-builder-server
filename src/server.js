@@ -62,7 +62,7 @@ app.get('/light/:id', (req, res, next) => {
 });
 
 app.get('/light/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM light WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM light WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -86,7 +86,7 @@ app.get('/dark/:id', (req, res, next) => {
 });
 
 app.get('/dark/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM dark WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM dark WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -110,7 +110,7 @@ app.get('/concepts/:id', (req, res, next) => {
 });
 
 app.get('/concepts/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM concepts WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM concepts WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -134,7 +134,7 @@ app.get('/events/:id', (req, res, next) => {
 });
 
 app.get('/events/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM events WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM events WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -158,7 +158,7 @@ app.get('/authors/:id', (req, res, next) => {
 });
 
 app.get('/authors/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM authors WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM authors WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -182,7 +182,7 @@ app.get('/cited/:id', (req, res, next) => {
 });
 
 app.get('/cited/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM cited WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM cited WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -206,7 +206,7 @@ app.get('/topics/:id', (req, res, next) => {
 });
 
 app.get('/topics/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM topics WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM topics WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
@@ -230,7 +230,7 @@ app.get('/perspectives/:id', (req, res, next) => {
 });
 
 app.get('/perspectives/:id/children', (req, res, next) => {
-        db.all("SELECT * FROM perspectives WHERE childof = ? ORDER BY isinstance ASC, name ASC", mysql_real_escape_string(req.params.id), (err, rows) => {
+        db.all("SELECT * FROM perspectives WHERE childof = ? ORDER BY id", mysql_real_escape_string(req.params.id), (err, rows) => {
             if(err !== null) {
                 return next(err);
             } else if (rows.length === 0) {
