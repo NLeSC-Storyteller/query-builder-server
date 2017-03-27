@@ -1,8 +1,6 @@
-Server component for the Query Builder platform. Will serve a sqlite database (made with query-builder-preprocessor) with a REST API.
+Server component for the Query Builder platform. Will serve a sqlite database (made with https://github.com/NLeSC-Storyteller/query-builder-preprocessing) with a REST API. Services both https://github.com/NLeSC-Storyteller/query-builder-client and https://github.com/NLeSC/UncertaintyVisualization/
 
-Made with ExpressJS. 
-
-Includes a custom trigger for the sqlite database on INSERT in the queries table, that will fire a Xenon function as defined by query-builder-daemon.
+Includes a custom trigger for the sqlite database on INSERT in the queries table, that will fire a Xenon function as defined by https://github.com/NLeSC-Storyteller/query-builder-daemon.
 
 To start the database server:
 ```bash
