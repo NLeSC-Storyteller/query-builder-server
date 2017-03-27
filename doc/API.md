@@ -5,7 +5,7 @@
 - ``/table/:id/children``
 - ``/search/table/:text``
 - ``/queries``
-- ``/queriesbyusername``
+- ``/queriesbyusername/:username``
 - ``/addquery``
 
 # long story long
