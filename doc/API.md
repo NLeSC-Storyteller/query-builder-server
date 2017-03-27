@@ -4,6 +4,8 @@
 - ``/list``
 - ``/node/:id``
 - ``/node/:id/children``
+- ``/node/:id/children``
+- ``/node/:id/children``
 - ``/root``
 
 
@@ -33,6 +35,8 @@ URL | Method | URL_params | Data_params
         "is_instance": 0,
         "mention_count": 84027,
         "name": "www.w3.org/2002/07/owl#Thing",
+        "type": "eventType",
+        "query": "http://dbpedia.org/ontology/www.w3.org/2002/07/owl#Thing",
         "url": "http://dbpedia.org/ontology/www.w3.org/2002/07/owl#Thing"
     }, {
         "child_of": 1,
@@ -42,6 +46,8 @@ URL | Method | URL_params | Data_params
         "is_instance": 0,
         "mention_count": 1,
         "name": "Activity",
+        "type": "eventType",
+        "query": "http://dbpedia.org/ontology/Activity",
         "url": "http://dbpedia.org/ontology/Activity"
     }, {
         "child_of": 2,
@@ -51,6 +57,8 @@ URL | Method | URL_params | Data_params
         "is_instance": 0,
         "mention_count": 1,
         "name": "Game",
+        "type": "eventType",
+        "query": "http://dbpedia.org/ontology/Game",
         "url": "http://dbpedia.org/ontology/Game"
     }, ...]
     ```
@@ -89,10 +97,12 @@ URL | Method | URL_params | Data_params
 
     ```javascript
     [{
-        "name": "nodes"
+        "name": "light"
     }, {
-        "name": "sqlite_sequence"
-    }]
+        "name": "dark"
+    }, {
+        "name": "queries"
+    }, ...]
     ```
 
 * **Error Response:**
@@ -135,6 +145,8 @@ URL | Method | URL_params | Data_params
         "is_instance": 1,
         "mention_count": 1,
         "name": "United_Nations_Economic_and_Social_Council",
+        "type": "agentInstance",
+        "query": "http://dbpedia.org/resource/United_Nations_Economic_and_Social_Council",
         "url": "http://dbpedia.org/resource/United_Nations_Economic_and_Social_Council"
     }]
     ```
@@ -180,6 +192,8 @@ URL | Method | URL_params | Data_params
         "is_instance": 1,
         "mention_count": 18,
         "name": "Decree",
+        "type": "lightEntity",
+        "query": "http://dbpedia.org/resource/Decree",
         "url": "http://dbpedia.org/resource/Decree"
     }, {
         "child_of": 5,
@@ -189,6 +203,8 @@ URL | Method | URL_params | Data_params
         "is_instance": 1,
         "mention_count": 4,
         "name": "Circa",
+        "type": "lightEntity",
+        "query": "http://dbpedia.org/resource/Circa",
         "url": "http://dbpedia.org/resource/Circa"
     }, {
         "child_of": 5,
@@ -198,6 +214,8 @@ URL | Method | URL_params | Data_params
         "is_instance": 1,
         "mention_count": 3,
         "name": "Justice",
+        "type": "lightEntity",
+        "query": "http://dbpedia.org/resource/Justice",
         "url": "http://dbpedia.org/resource/Justice"
     }, {
         "child_of": 5,
@@ -207,44 +225,10 @@ URL | Method | URL_params | Data_params
         "is_instance": 1,
         "mention_count": 1,
         "name": "Nova",
+        "type": "lightEntity",
+        "query": "http://dbpedia.org/resource/Nova",
         "url": "http://dbpedia.org/resource/Nova"
-    }, {
-        "child_of": 5,
-        "id": 10,
-        "is_entity": 0,
-        "is_expandable": 0,
-        "is_instance": 1,
-        "mention_count": 1,
-        "name": "United_Nations_Economic_and_Social_Council",
-        "url": "http://dbpedia.org/resource/United_Nations_Economic_and_Social_Council"
-    }, {
-        "child_of": 5,
-        "id": 11,
-        "is_entity": 0,
-        "is_expandable": 0,
-        "is_instance": 1,
-        "mention_count": 1,
-        "name": "Vijay_Kapoor",
-        "url": "http://dbpedia.org/resource/Vijay_Kapoor"
-    }, {
-        "child_of": 5,
-        "id": 12,
-        "is_entity": 1,
-        "is_expandable": 1,
-        "is_instance": 0,
-        "mention_count": 53945,
-        "name": "Organisation",
-        "url": "http://dbpedia.org/ontology/Organisation"
-    }, {
-        "child_of": 5,
-        "id": 7895,
-        "is_entity": 1,
-        "is_expandable": 1,
-        "is_instance": 0,
-        "mention_count": 11595,
-        "name": "Person",
-        "url": "http://dbpedia.org/ontology/Person"
-    }]
+    }, ...]
     ```
 
 * **Error Response:**
@@ -257,6 +241,67 @@ URL | Method | URL_params | Data_params
   ```javascript
     $.ajax({
       url: "/node/5/children",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+## ``/search/node/:text``
+
+Returns a list of id's of nodes with a substring equal to ``:text`` and, recursively, the parents of these nodes.
+
+URL | Method | URL_params | Data_params
+--- | -------| ---------- | -----------
+``/search/node/:text`` | 'GET' | Required | None
+                   |       | `text=[string]` |
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**
+
+    ```javascript
+    [ 5, 2, 1 ]
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/search/event/validate",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+## ``/queries``
+
+Returns a list of all of the queries in the database, including their status.
+
+URL | Method | URL_params | Data_params
+--- | -------| ---------- | -----------
+``/queries`` | 'GET' | None | None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**
+
+    ```javascript
+    [ 5, 2, 1 ]
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/search/event/validate",
       dataType: "json",
       type : "GET",
       success : function(r) {
