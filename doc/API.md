@@ -1,94 +1,34 @@
 # long story short
 
-- ``/``
 - ``/list``
-- ``/node/:id``
-- ``/node/:id/children``
-- ``/node/:id/children``
-- ``/node/:id/children``
-- ``/root``
-
-
+- ``/table/:id``
+- ``/table/:id/children``
+- ``/search/table/:text``
+- ``/queries``
+- ``/queriesbyusername``
+- ``/addquery``
 
 # long story long
 
+**List**
+----
+  Returns json data about the tables in the sqlite database.
 
-## ``/``
+* **URL**
 
-Returns json data corresponding with all of the nodes in the database.
+  /list
 
-URL | Method | URL_params | Data_params
---- | -------| ---------- | -----------
-``/`` | 'GET' | None | None
+* **Method:**
 
-* **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:**
-
-    ```javascript
-    [{
-        "child_of": null,
-        "id": 1,
-        "is_entity": 1,
-        "is_expandable": 1,
-        "is_instance": 0,
-        "mention_count": 84027,
-        "name": "www.w3.org/2002/07/owl#Thing",
-        "type": "eventType",
-        "query": "http://dbpedia.org/ontology/www.w3.org/2002/07/owl#Thing",
-        "url": "http://dbpedia.org/ontology/www.w3.org/2002/07/owl#Thing"
-    }, {
-        "child_of": 1,
-        "id": 2,
-        "is_entity": 1,
-        "is_expandable": 1,
-        "is_instance": 0,
-        "mention_count": 1,
-        "name": "Activity",
-        "type": "eventType",
-        "query": "http://dbpedia.org/ontology/Activity",
-        "url": "http://dbpedia.org/ontology/Activity"
-    }, {
-        "child_of": 2,
-        "id": 3,
-        "is_entity": 1,
-        "is_expandable": 1,
-        "is_instance": 0,
-        "mention_count": 1,
-        "name": "Game",
-        "type": "eventType",
-        "query": "http://dbpedia.org/ontology/Game",
-        "url": "http://dbpedia.org/ontology/Game"
-    }, ...]
-    ```
-
-
-* **Error Response:**
+  `GET`
+  
+*  **URL Params**
 
   None
 
-* **Sample Call:**
+* **Data Params**
 
-  ```javascript
-    $.ajax({
-      url: "/",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-
-
-## ``/list``
-
-Returns json data about the tables in the sqlite database.
-
-URL | Method | URL_params | Data_params
---- | -------| ---------- | -----------
-``/list`` | 'GET' | None | None
+  None
 
 * **Success Response:**
 
@@ -122,14 +62,27 @@ URL | Method | URL_params | Data_params
     });
   ```
 
-## ``/node/:id``
+**Get Specific Node data from table**
+----
+  Returns json data corresponding to the node with ID equal to ``:id`` from the table ``table``. defined tables are ``light``, ``dark``, ``concepts``, ``events``, ``authors``, ``cited``, , ``topics`` and ``perspectives``.
 
-Returns json data corresponding to the node with ID equal to ``:id``.
+* **URL**
 
-URL | Method | URL_params | Data_params
---- | -------| ---------- | -----------
-``/node/:id`` | 'GET' | Required | None
-          |       | `id=[integer]` |
+  /table/:id
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+* **Data Params**
+
+    None
 
 * **Success Response:**
 
@@ -138,16 +91,15 @@ URL | Method | URL_params | Data_params
 
     ```javascript
     [{
-        "child_of": 5,
-        "id": 10,
-        "is_entity": 0,
-        "is_expandable": 0,
-        "is_instance": 1,
-        "mention_count": 1,
-        "name": "United_Nations_Economic_and_Social_Council",
-        "type": "agentInstance",
-        "query": "http://dbpedia.org/resource/United_Nations_Economic_and_Social_Council",
-        "url": "http://dbpedia.org/resource/United_Nations_Economic_and_Social_Council"
+        "id": 4,
+        "name": "Scientist",
+        "isinstance": 0,
+        "childof": 3,
+        "childcount": 0,
+        "instancecount": 18,
+        "mentioncount": 177,
+        "query": "http://dbpedia.org/ontology/Scientist",
+        "query_type": "entityType"
     }]
     ```
 
@@ -160,7 +112,7 @@ URL | Method | URL_params | Data_params
 
   ```javascript
     $.ajax({
-      url: "/node/10",
+      url: "/light/4",
       dataType: "json",
       type : "GET",
       success : function(r) {
@@ -169,14 +121,27 @@ URL | Method | URL_params | Data_params
     });
   ```
 
-## ``/node/:id/children``
+**Get children data from table**
+----
+  Returns json data corresponding to the node with ID equal to ``:id`` from the table ``table``. defined tables are ``light``, ``dark``, ``concepts``, ``events``, ``authors``, ``cited``, , ``topics`` and ``perspectives``.
 
-Returns json data corresponding to the children of node with ID equal to ``:id``.
+* **URL**
 
-URL | Method | URL_params | Data_params
---- | -------| ---------- | -----------
-``/node/:id/children`` | 'GET' | Required | None
-                   |       | `id=[integer]` |
+  /table/:id/children
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+* **Data Params**
+
+    None
 
 * **Success Response:**
 
@@ -185,50 +150,36 @@ URL | Method | URL_params | Data_params
 
     ```javascript
     [{
-        "child_of": 5,
-        "id": 6,
-        "is_entity": 0,
-        "is_expandable": 0,
-        "is_instance": 1,
-        "mention_count": 18,
-        "name": "Decree",
-        "type": "lightEntity",
-        "query": "http://dbpedia.org/resource/Decree",
-        "url": "http://dbpedia.org/resource/Decree"
+        "id": 3,
+        "name": "Person",
+        "isinstance": 0,
+        "childof": 2,
+        "childcount": 14,
+        "instancecount": 59,
+        "mentioncount": 491,
+        "query": "http://dbpedia.org/ontology/Person",
+        "query_type": "entityType"
     }, {
-        "child_of": 5,
-        "id": 7,
-        "is_entity": 0,
-        "is_expandable": 0,
-        "is_instance": 1,
-        "mention_count": 4,
-        "name": "Circa",
-        "type": "lightEntity",
-        "query": "http://dbpedia.org/resource/Circa",
-        "url": "http://dbpedia.org/resource/Circa"
+        "id": 175,
+        "name": "Organisation",
+        "isinstance": 0,
+        "childof": 2,
+        "childcount": 9,
+        "instancecount": 10,
+        "mentioncount": 384,
+        "query": "http://dbpedia.org/ontology/Organisation",
+        "query_type": "entityType"
     }, {
-        "child_of": 5,
-        "id": 8,
-        "is_entity": 0,
-        "is_expandable": 0,
-        "is_instance": 1,
-        "mention_count": 3,
-        "name": "Justice",
-        "type": "lightEntity",
-        "query": "http://dbpedia.org/resource/Justice",
-        "url": "http://dbpedia.org/resource/Justice"
-    }, {
-        "child_of": 5,
-        "id": 9,
-        "is_entity": 0,
-        "is_expandable": 0,
-        "is_instance": 1,
-        "mention_count": 1,
-        "name": "Nova",
-        "type": "lightEntity",
-        "query": "http://dbpedia.org/resource/Nova",
-        "url": "http://dbpedia.org/resource/Nova"
-    }, ...]
+        "id": 281,
+        "name": "Ministry_of_Defence_(United_Kingdom)",
+        "isinstance": 1,
+        "childof": 2,
+        "childcount": 0,
+        "instancecount": 0,
+        "mentioncount": 1,
+        "query": "http://dbpedia.org/resource/Ministry_of_Defence_(United_Kingdom)",
+        "query_type": "lightEntityInstance"
+    }]
     ```
 
 * **Error Response:**
@@ -240,7 +191,7 @@ URL | Method | URL_params | Data_params
 
   ```javascript
     $.ajax({
-      url: "/node/5/children",
+      url: "/light/5/children",
       dataType: "json",
       type : "GET",
       success : function(r) {
@@ -249,14 +200,27 @@ URL | Method | URL_params | Data_params
     });
   ```
 
-## ``/search/node/:text``
+**Recursively search nodes for text**
+----
+  Returns a list of id's of nodes with a substring equal to ``:text`` int he table ``table`` and, recursively, the parents of these nodes.
 
-Returns a list of id's of nodes with a substring equal to ``:text`` and, recursively, the parents of these nodes.
+* **URL**
 
-URL | Method | URL_params | Data_params
---- | -------| ---------- | -----------
-``/search/node/:text`` | 'GET' | Required | None
-                   |       | `text=[string]` |
+  /search/table/:text
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `text=[string]`
+
+* **Data Params**
+
+    None
 
 * **Success Response:**
 
@@ -264,7 +228,11 @@ URL | Method | URL_params | Data_params
     **Content:**
 
     ```javascript
-    [ 5, 2, 1 ]
+    [{
+        "myID": 2
+    }, {
+        "myID": 1
+    }]
     ```
 
 * **Sample Call:**
@@ -280,13 +248,25 @@ URL | Method | URL_params | Data_params
     });
   ```
 
-## ``/queries``
+**List queries**
+----
+  Returns a list of all of the queries in the database, including their status.
 
-Returns a list of all of the queries in the database, including their status.
+* **URL**
 
-URL | Method | URL_params | Data_params
---- | -------| ---------- | -----------
-``/queries`` | 'GET' | None | None
+  /queries
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   None
+
+* **Data Params**
+
+    None
 
 * **Success Response:**
 
@@ -294,14 +274,26 @@ URL | Method | URL_params | Data_params
     **Content:**
 
     ```javascript
-    [ 5, 2, 1 ]
+    [{
+        "id": 1,
+        "username": "maarten",
+        "status": 1,
+        "query": "--eventType fn:Objective_influence"
+    }, {
+        "id": 2,
+        "username": "piek",
+        "status": 1,
+        "query": "--eventType fn:Transitive_action"
+    }, {
+        ...
+    }]
     ```
 
 * **Sample Call:**
 
   ```javascript
     $.ajax({
-      url: "/search/event/validate",
+      url: "/queries",
       dataType: "json",
       type : "GET",
       success : function(r) {
@@ -310,6 +302,104 @@ URL | Method | URL_params | Data_params
     });
   ```
 
-## ``/root``
+**List queries of a specific username**
+----
+  Returns a list of all of the queries in the database of user ``username``, including their status.
 
-Returns json data corresponding with the root node in the database. This is simply an alias for ``/node/1``.
+* **URL**
+
+  /queriesbyusername/:username
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+
+   `username=[string]`
+
+* **Data Params**
+
+    None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**
+
+    ```javascript
+    [{
+        "id": 1,
+        "username": "maarten",
+        "status": 1,
+        "query": "--eventType fn:Objective_influence"
+    }, {
+        "id": 5,
+        "username": "maarten",
+        "status": 1,
+        "query": "--eventType fn:Transitive_action"
+    }, {
+        ...
+    }]
+    ```
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/queriesbyusername/maarten",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+**Add a query to be processed by the knowledgestore**
+----
+  Adds a query to the database, which will be processed in the background by Xenon.
+
+* **URL**
+
+  /addquery
+
+* **Method:**
+
+  `POST`
+  
+* **URL Params**
+
+    None
+
+* **Data Params**
+
+    ```javascript
+    {
+      "username": [string],
+      "query": [string]
+    }
+    ```
+
+* **Success Response:**
+
+* **Code:** 200 <br />
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/addquery",
+      dataType: "json",
+      data: {
+        "username": "maarten",
+        "query": "--eventType fn:Transitive_action"
+      },
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```

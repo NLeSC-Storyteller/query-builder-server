@@ -1,4 +1,0 @@
-{
-    "database_location": "/data/storyteller.db",
-    "extension_location": "/src/query-builder-server/sqlite/funcs/libxenonfunctions"
-}
