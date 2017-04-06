@@ -10,7 +10,7 @@ SQLITE_EXTENSION_INIT1
 /*Xenon function to run queries*/
 void xenon_run_query( const unsigned int query_id, const unsigned char* query)
 {
-    char cmd[100];
+    char cmd[10000];
 //    sprintf(cmd, "echo \"%d %s\" >> xenon.out", query_id, query);
 //    system(cmd);
     sprintf(cmd, "curl --data \"id=%d&query=%s\" http://daemon:4567/submit", query_id, query);
