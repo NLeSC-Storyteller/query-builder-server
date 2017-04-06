@@ -4,14 +4,15 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var btoa = require('btoa');
 
-var db = new sqlite3.Database('/data/storyteller.db');
+var config = require('./config.json');
+var db = new sqlite3.Database(config.database_location);
 var app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors());
 
-db.loadExtension('/src/query-builder-server/sqlite/funcs/libxenonfunctions');
+db.loadExtension(config.extension_location);
 
 console.log('Query-Builder-Server started. logging enabled.');
 
@@ -383,6 +384,15 @@ app.post('/addquery', (req, res, next) => {
 
 app.get('/queries', (req, res, next) => {
     db.all("SELECT id, username, query, status FROM queries;", (err, rows) => {
+        if(err !== null) {
+            return next(err);
+        } 
+        res.status(200).send(rows);
+    });
+});
+
+app.get('/queriesbyusername/:username', (req, res, next) => {
+    db.all("SELECT id, username, query, status FROM queries WHERE username = ?;", mysql_real_escape_string(req.params.username), (err, rows) => {
         if(err !== null) {
             return next(err);
         } 
