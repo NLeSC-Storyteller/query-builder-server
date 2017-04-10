@@ -7,6 +7,8 @@
 - ``/queries``
 - ``/queriesbyusername/:username``
 - ``/addquery``
+- ``/query/:id``
+
 
 # long story long
 
@@ -398,6 +400,48 @@
         "query": "--eventType fn:Transitive_action"
       },
       type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+**Get the result of a specific query**
+----
+  Adds a query to the database, which will be processed in the background by Xenon.
+
+* **URL**
+
+  /query/:id
+
+* **Method:**
+
+  `GET`
+  
+* **URL Params**
+
+   **Required:**
+ 
+   `id=[number]`
+
+* **Data Params**
+
+    None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**
+    JSON data file
+
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/query/1",
+      dataType: "json",
+      type : "GET",
       success : function(r) {
         console.log(r);
       }
