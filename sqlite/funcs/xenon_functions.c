@@ -38,7 +38,7 @@ void xenon_run_query( const unsigned int query_id, const unsigned char* query, c
 
 void xenon_query(sqlite3_context *context, int argc, sqlite3_value **argv)
 {
-    assert( argc == 2);
+    assert( argc == 3);
     const unsigned int query_id = sqlite3_value_int(argv[0]);
     const unsigned char* query = sqlite3_value_text(argv[1]);
     const unsigned int mention_limit = sqlite3_value_int(argv[2]);
