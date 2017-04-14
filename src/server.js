@@ -366,10 +366,10 @@ app.post('/addquery', (req, res, next) => {
     console.log(Object.keys(req.body));
     var username = mysql_real_escape_string(req.body.username);
     var query = mysql_real_escape_string(req.body.query);
-    var limit = req.body.limit;
+    var mention_limit = req.body.mention_limit;
 
-    sqlRequest = "INSERT INTO queries (username, query, limit) " +
-                 "VALUES('" + username + "','" + query + "'," + limit + ")";
+    sqlRequest = "INSERT INTO queries (username, query, mention_limit) " +
+                 "VALUES('" + username + "','" + query + "'," + mention_limit + ")";
     console.log(sqlRequest);
 
     db.run(sqlRequest, (err) => {

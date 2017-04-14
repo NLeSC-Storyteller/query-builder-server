@@ -9,7 +9,7 @@ SQLITE_EXTENSION_INIT1
 #define BUILDING_DLL
 
 /*Xenon function to run queries*/
-void xenon_run_query( const unsigned int query_id, const unsigned char* query, const unsigned int limit )
+void xenon_run_query( const unsigned int query_id, const unsigned char* query, const unsigned int mention_limit )
 {
     /*Determines the length of query_id as string. It accepts negative numbers*/
     int query_id_len = (query_id == 0 ? 1 : ((int)(log10(fabs(query_id))+1) + (query_id < 0 ? 1 : 0)));
@@ -23,7 +23,7 @@ void xenon_run_query( const unsigned int query_id, const unsigned char* query, c
         fprintf(stderr, "xenon_run_query: malloc failed!!!");
         exit(1);
     }
-    while (sprintf(cmd, "curl --data \"id=%d&query=%s&limit=%d\" http://daemon:4567/submit", query_id, query, limit) > (txt_len + query_id_len + query_len)) {
+    while (sprintf(cmd, "curl --data \"id=%d&query=%s&mention_limit=%d\" http://daemon:4567/submit", query_id, query, mention_limit) > (txt_len + query_id_len + query_len)) {
         if ( (cmd = realloc(cmd, (txt_len + query_id_len + query_len)*2)) == NULL) {
             fprintf(stderr, "xenon_run_query: realloc failed!!!");
             exit(1);
@@ -41,8 +41,8 @@ void xenon_query(sqlite3_context *context, int argc, sqlite3_value **argv)
     assert( argc == 2);
     const unsigned int query_id = sqlite3_value_int(argv[0]);
     const unsigned char* query = sqlite3_value_text(argv[1]);
-    const unsigned int limit = sqlite3_value_int(argv[2]);
-    xenon_run_query( query_id, query, limit );
+    const unsigned int mention_limit = sqlite3_value_int(argv[2]);
+    xenon_run_query( query_id, query, mention_limit );
 }
 
 /*Add functions as extensions to SQLite*/
