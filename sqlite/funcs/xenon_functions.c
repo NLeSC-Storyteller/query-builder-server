@@ -59,7 +59,7 @@ int sqlite3_xenonfunctions_init(
     SQLITE_EXTENSION_INIT2(pApi)
 
     /*Create all the functions*/
-    rc = sqlite3_create_function(db, "xenon_query", 2, SQLITE_UTF8, NULL, &xenon_query, NULL, NULL);
+    rc = sqlite3_create_function(db, "xenon_query", 3, SQLITE_UTF8, NULL, &xenon_query, NULL, NULL);
 
     return rc;
 }
