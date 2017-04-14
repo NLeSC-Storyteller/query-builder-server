@@ -366,7 +366,7 @@ app.post('/addquery', (req, res, next) => {
     console.log(Object.keys(req.body));
     var username = mysql_real_escape_string(req.body.username);
     var query = mysql_real_escape_string(req.body.query);
-    var limit = mysql_real_escape_string(req.body.limit);
+    var limit = req.body.limit;
 
     sqlRequest = "INSERT INTO queries (username, query, limit) " +
                  "VALUES('" + username + "','" + query + "','" + limit + "')";
