@@ -369,7 +369,7 @@ app.post('/addquery', (req, res, next) => {
     var limit = req.body.limit;
 
     sqlRequest = "INSERT INTO queries (username, query, limit) " +
-                 "VALUES('" + username + "','" + query + "','" + limit + "')";
+                 "VALUES('" + username + "','" + query + "'," + limit + ")";
     console.log(sqlRequest);
 
     db.run(sqlRequest, (err) => {
