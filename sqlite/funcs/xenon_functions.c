@@ -17,15 +17,17 @@ void xenon_run_query( const unsigned int query_id, const unsigned char* query, c
 
     /*Length of the static text below plus 1 for end string character*/
     int txt_len = 64, out_len = 0;
+    int write_size = 0, buf_size = sizeof(char)*(txt_len + query_id_len + query_len);
     char *cmd = NULL;
 
-    if ( (cmd = (char*) malloc(sizeof(char) * (txt_len + query_id_len + query_len))) == NULL) {
+    if ( (cmd = (char*) malloc(buf_size)) == NULL) {
         fprintf(stderr, "xenon_run_query: malloc failed!!!");
         exit(1);
     }
-    while (sprintf(cmd, "curl --data \"id=%d&query=%s&mention_limit=%d\" http://daemon:4567/submit", query_id, query, mention_limit) > (txt_len + query_id_len + query_len)) {
-        if ( (cmd = realloc(cmd, (txt_len + query_id_len + query_len)*2)) == NULL) {
-            fprintf(stderr, "xenon_run_query: realloc failed!!!");
+    while ((write_size = sprintf(cmd, "curl --data \"id=%d&query=%s&mention_limit=%d\" http://daemon:4567/submit", query_id, query, mention_limit)) > buf_size) {
+        buf_size *=2;
+        if ( (cmd = (char*) realloc(cmd, buf_size)) == NULL) {
+            fprintf(stderr, "xenon_run_query: realloc failed %d > %d!!!", write_size, buf_size);
             exit(1);
         }
     }
