@@ -1,0 +1,9 @@
+id: 1
+ksQuery: --entityPhrase virus;disease
+ksQuerylimit: 5000
+
+classpath: /src/StoryTeller/target/StoryTeller-v1.0-jar-with-dependencies.jar 
+ksServer: http://130.37.53.35:50053
+logging: true
+tokenIndex: /data/token.index.gz
+eurovoc: /src/vua-resources/mapping_eurovoc_skos.label.concept.gz 
