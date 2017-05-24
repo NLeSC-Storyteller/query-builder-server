@@ -14,7 +14,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: java
-arguments: -Xmx2000m
+arguments: ["-Xmx2000m"]
 inputs:
   id:
     type: int
@@ -46,9 +46,9 @@ inputs:
   logging:
     type: boolean
     doc: Enable logging of the query. Default true.
+    default: true
     inputBinding:
       position: 5
-      default: true
       prefix: --log
   tokenIndex:
     type: File
