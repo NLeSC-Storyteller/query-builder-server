@@ -15,10 +15,9 @@ cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: java
 arguments: ["-Xmx2000m"]
+stdout: stdout.txt 
+stderr: stderr.txt 
 inputs:
-  id:
-    type: int
-    doc: The job ID
   ksQuery:
     type: string
     doc: The KnowledgeStore query input string.
@@ -62,11 +61,12 @@ inputs:
     inputBinding:
       position: 7
       prefix: --eurovoc
+
 outputs:
   out: 
     type: stdout
   err: 
     type: stderr
 
-stdout: $(runtime.outdir + '/' + inputs.id + '.json')
-stderr: $(runtime.outdir + '/' + inputs.id + '.err')
+#stdout: $(runtime.outdir + '/' + inputs.id + '.json')
+#stderr: $(runtime.outdir + '/' + inputs.id + '.err')
