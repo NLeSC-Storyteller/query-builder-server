@@ -32,8 +32,8 @@ inputs:
       position: 3
       prefix: --ks-limit
   classpath:
-    type: string
-    doc: Full path to the JAR file
+    type: File
+    doc: The JAR file "StoryTeller-v1.0-jar-with-dependencies.jar"
     inputBinding:
       position: 1
       prefix: -cp
@@ -51,14 +51,14 @@ inputs:
       default: true
       prefix: --log
   tokenIndex:
-    type: string
-    doc: Full path to the token index file.
+    type: File
+    doc: The token index file.
     inputBinding:
       position: 6
       prefix: --token-index
   eurovoc:
-    type: string
-    doc: Full path to the eurovoc mapping file.
+    type: File
+    doc: The eurovoc mapping file.
     inputBinding:
       position: 7
       prefix: --eurovoc
