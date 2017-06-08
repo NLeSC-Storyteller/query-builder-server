@@ -24,7 +24,7 @@ void xenon_run_query( const unsigned int query_id, const unsigned char* query, c
         fprintf(stderr, "xenon_run_query: malloc failed!!!");
         exit(1);
     }
-    while ((write_size = sprintf(cmd, "curl --data \"id=%d&query=%s&mention_limit=%d\" http://daemon:4567/submit", query_id, query, mention_limit)) > buf_size) {
+    while ((write_size = snprintf(cmd, buf_size, "curl --data \"id=%d&query=%s&mention_limit=%d\" http://daemon:4567/submit", query_id, query, mention_limit)) > buf_size) {
         buf_size *=2;
         if ( (cmd = (char*) realloc(cmd, buf_size)) == NULL) {
             fprintf(stderr, "xenon_run_query: realloc failed %d > %d!!!", write_size, buf_size);
