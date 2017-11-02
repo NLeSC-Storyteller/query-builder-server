@@ -1,0 +1,21 @@
+{
+    "ksQuery": "--entityPhrase virus;disease",
+    "ksQuerylimit": 5000,
+    "ksServer": "http://130.37.53.35:50053",
+    "logging": true,
+    
+    "classpath": {
+      "class": "File",
+      "path": "StoryTeller-v1.0-jar-with-dependencies.jar"
+    },
+
+    "tokenIndex": {
+      "class": "File",
+      "path": "token.index.gz"
+    },
+
+    "eurovoc": {
+      "class": "File",
+      "path": "mapping_eurovoc_skos.label.concept.gz"     
+    }
+}
