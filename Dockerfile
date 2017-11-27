@@ -5,8 +5,8 @@ VOLUME /data
 COPY . /src/query-builder-server/
 
 WORKDIR /src/query-builder-server/
-RUN npm install
-RUN npm install sqlite3
+RUN yarn install
+RUN yarn add sqlite3
 
 WORKDIR /src/query-builder-server/sqlite/funcs/
 RUN tar -xvzf /src/query-builder-server/node_modules/sqlite3/deps/sqlite-autoconf-3150000.tar.gz sqlite-autoconf-3150000/sqlite3.h

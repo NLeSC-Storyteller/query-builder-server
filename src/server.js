@@ -2,7 +2,6 @@ var sqlite3 = require('sqlite3').verbose();
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var btoa = require('btoa');
 
 var config = require('./config.json');
 var db = new sqlite3.Database(config.database_location);
@@ -359,74 +358,6 @@ app.get('/search/perspectives/:text', (req, res, next) => {
             return next(err);
         } 
         res.status(200).send(rows);
-    });
-});
-
-app.post('/addquery', (req, res, next) => {
-    console.log(Object.keys(req.body));
-    var username = mysql_real_escape_string(req.body.username);
-    var query = mysql_real_escape_string(req.body.query);
-    var mention_limit = req.body.mention_limit;
-
-    sqlRequest = "INSERT INTO queries (username, query, mention_limit) " +
-                 "VALUES('" + username + "','" + query + "'," + mention_limit + ")";
-    console.log(sqlRequest);
-
-    db.run(sqlRequest, (err) => {
-        if(err !== null) {
-            console.log(err.message);
-            next(err);
-        }
-        else {
-            res.redirect('back');
-        }
-    });
-});
-
-app.get('/queries', (req, res, next) => {
-    db.all("SELECT id, username, query, status FROM queries;", (err, rows) => {
-        if(err !== null) {
-            return next(err);
-        } 
-        res.status(200).send(rows);
-    });
-});
-
-app.get('/queriesbyusername/:username', (req, res, next) => {
-    db.all("SELECT id, username, query, status FROM queries WHERE username = ?;", mysql_real_escape_string(req.params.username), (err, rows) => {
-        if(err !== null) {
-            return next(err);
-        } 
-        res.status(200).send(rows);
-    });
-});
-
-app.get('/query/:id', (req, res, next) => {
-    db.all("SELECT result FROM queries WHERE id = ?;", mysql_real_escape_string(req.params.id), (err, rows) => {
-        if(err !== null) {
-            return next(err);
-        } else if (rows.length === 0) {
-            console.log(err);
-            return res.status(404).send({ error : "ID doesn't exist" });
-        }
-
-        var options = {
-            headers: {
-                'Content-Type': 'application/json',
-                'x-timestamp': Date.now(),
-                'x-sent': true
-            }
-        };
-
-        var fileName = rows[0].result;
-        console.log(fileName);
-        res.status(200).sendFile(fileName, options, function (err) {
-            if (err) {
-                next(err);
-            } else {
-                console.log('Sent:', fileName);
-            }
-        });
     });
 });
 

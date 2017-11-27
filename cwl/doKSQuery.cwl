@@ -26,6 +26,7 @@ inputs:
       prefix: vu.cltl.storyteller.json.JsonMakeStoryFromTripleData
   ksQuerylimit:
     type: int
+    default: 5000
     doc: The maximum number of results.
     inputBinding:
       position: 3
@@ -61,12 +62,22 @@ inputs:
     inputBinding:
       position: 7
       prefix: --eurovoc
+  outputname:
+    type: string
+    default: output.json
+    inputBinding:
+      position: 8
+      prefix: --out
 
 outputs:
   out: 
     type: stdout
   err: 
     type: stderr
+  output:
+    type: File
+    outputBinding:
+      glob: $(inputs.outputname)
 
 #stdout: $(runtime.outdir + '/' + inputs.id + '.json')
 #stderr: $(runtime.outdir + '/' + inputs.id + '.err')
